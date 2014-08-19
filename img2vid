@@ -1,0 +1,8 @@
+#!/bin/bash
+read -e -p "Audio file :" audio_file;
+read -e -p "Image file :" image_file;
+read -p "Output file name :" output_file;
+eyeD3 --remove-v1 "${audio_file}" 
+eyeD3 --remove-v2 "${audio_file}"
+eyeD3 --remove-lyrics "${audio_file}"  
+ffmpeg -i "${audio_file}" -f image2 -loop 1 -i "${image_file}" -r 15 -s 640x480 -c:v libx264 -crf 18 -tune stillimage -preset medium -shortest -strict -2 "${output_file}"
